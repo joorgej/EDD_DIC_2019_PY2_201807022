@@ -34,6 +34,7 @@ public class Administrator extends javax.swing.JFrame {
      */
     public Administrator() {
         initComponents();
+        this.setLocationRelativeTo(null);
         updateTable();
         this.setVisible(true);
     }

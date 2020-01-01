@@ -5,6 +5,18 @@
  */
 package Views;
 
+import static Objects.Sha256.sha256;
+import Objects.User;
+import java.io.File;
+import java.io.FileReader;
+import java.io.Reader;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.parser.JSONParser;
+
 /**
  *
  * @author Jorge
@@ -16,6 +28,9 @@ public class LearningMenu extends javax.swing.JFrame {
      */
     public LearningMenu() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        
     }
 
     /**
@@ -34,16 +49,16 @@ public class LearningMenu extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Bubble Sort");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
             }
         });
 
-        jButton2.setText("jButton2");
+        jButton2.setText("Insertion Sort");
 
-        jButton3.setText("jButton3");
+        jButton3.setText("Quick Sort");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -55,7 +70,7 @@ public class LearningMenu extends javax.swing.JFrame {
                     .addComponent(jButton3)
                     .addComponent(jButton2)
                     .addComponent(jButton1))
-                .addContainerGap(813, Short.MAX_VALUE))
+                .addContainerGap(781, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -73,43 +88,50 @@ public class LearningMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        FileNameExtensionFilter f = new FileNameExtensionFilter("JSON", "json");
+        
+        fc.setFileFilter(f);
+        
+        int seleccion = fc.showOpenDialog(this);
+        
+        if(seleccion == JFileChooser.APPROVE_OPTION)
+        {
+            int[] arr = null;
+            JSONParser parser = new JSONParser();
+            try
+            {
+                
+                File fichero = fc.getSelectedFile();
+                Reader reader = new FileReader(fichero);
+                JSONObject object = (JSONObject) parser.parse(reader);
+                JSONArray jsonarr = (JSONArray) object.get("Array");
+                arr = new int[jsonarr.size()];
+                for(int i = 0; i<jsonarr.size(); i++)
+                {
+                    JSONObject obj = (JSONObject) jsonarr.get(i);
+                    
+                    arr[i] = ((Long)obj.get("num")).intValue();
+                         
+                }
+                
+                this.setVisible(false);
+                Sorts s = new Sorts(arr,1);
+                this.dispose();
+            }
+            catch(Exception e)
+            {
+                System.out.println("JSONArray ERROR!");
+            }
+            
+        }
+        
         
     }//GEN-LAST:event_jButton1MouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LearningMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LearningMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LearningMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LearningMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LearningMenu().setVisible(true);
-            }
-        });
-    }
+    
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser fc;

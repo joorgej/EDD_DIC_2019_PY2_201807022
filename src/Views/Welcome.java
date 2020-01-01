@@ -16,8 +16,9 @@ public class Welcome extends javax.swing.JFrame {
      */
     public Welcome(String nombre, String apellido) {
         initComponents();
-        this.jLabel1.setText(nombre);
-        this.jLabel2.setText(apellido);
+        this.setLocationRelativeTo(null);
+        this.jLabel1.setText(apellido);
+        this.jLabel2.setText(nombre);
         this.setVisible(true);
     }
 
@@ -43,6 +44,11 @@ public class Welcome extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Calibri Light", 1, 24)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Continuar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Calibri Light", 0, 48)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -90,6 +96,12 @@ public class Welcome extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        this.setVisible(false);
+        LearningMenu m = new LearningMenu();
+        this.dispose();
+    }//GEN-LAST:event_jButton1MouseClicked
 
     
 
