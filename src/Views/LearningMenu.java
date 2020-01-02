@@ -5,8 +5,10 @@
  */
 package Views;
 
+import Views.Sorts.BubbleSort;
 import static Objects.Sha256.sha256;
 import Objects.User;
+import Views.Sorts.InsertionSort;
 import java.io.File;
 import java.io.FileReader;
 import java.io.Reader;
@@ -46,6 +48,7 @@ public class LearningMenu extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jRadioButton1 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,25 +60,39 @@ public class LearningMenu extends javax.swing.JFrame {
         });
 
         jButton2.setText("Insertion Sort");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
         jButton3.setText("Quick Sort");
+
+        jRadioButton1.setText("Automatico");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(174, 174, 174)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
-                .addContainerGap(781, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(174, 174, 174)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButton3)
+                            .addComponent(jButton2)
+                            .addComponent(jButton1)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(442, 442, 442)
+                        .addComponent(jRadioButton1)))
+                .addContainerGap(531, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(324, Short.MAX_VALUE)
+                .addGap(76, 76, 76)
+                .addComponent(jRadioButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 223, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
@@ -115,7 +132,7 @@ public class LearningMenu extends javax.swing.JFrame {
                 }
                 
                 this.setVisible(false);
-                Sorts s = new Sorts(arr,1);
+                BubbleSort s = new BubbleSort(arr,false,1);
                 this.dispose();
             }
             catch(Exception e)
@@ -128,6 +145,45 @@ public class LearningMenu extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButton1MouseClicked
 
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        FileNameExtensionFilter f = new FileNameExtensionFilter("JSON", "json");
+        
+        fc.setFileFilter(f);
+        
+        int seleccion = fc.showOpenDialog(this);
+        
+        if(seleccion == JFileChooser.APPROVE_OPTION)
+        {
+            int[] arr = null;
+            JSONParser parser = new JSONParser();
+            try
+            {
+                
+                File fichero = fc.getSelectedFile();
+                Reader reader = new FileReader(fichero);
+                JSONObject object = (JSONObject) parser.parse(reader);
+                JSONArray jsonarr = (JSONArray) object.get("Array");
+                arr = new int[jsonarr.size()];
+                for(int i = 0; i<jsonarr.size(); i++)
+                {
+                    JSONObject obj = (JSONObject) jsonarr.get(i);
+                    
+                    arr[i] = ((Long)obj.get("num")).intValue();
+                         
+                }
+                
+                this.setVisible(false);
+                InsertionSort s = new InsertionSort(arr,true,1);
+                this.dispose();
+            }
+            catch(Exception e)
+            {
+                System.out.println("JSONArray ERROR!");
+            }
+            
+        }
+    }//GEN-LAST:event_jButton2MouseClicked
+
     
     
     
@@ -138,5 +194,6 @@ public class LearningMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JRadioButton jRadioButton1;
     // End of variables declaration//GEN-END:variables
 }
