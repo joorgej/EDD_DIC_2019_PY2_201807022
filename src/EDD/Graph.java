@@ -28,6 +28,31 @@ public class Graph {
     
     public void addNodes(String[] nodes)
     {
+        int i, j;
+        String aux;
+        boolean flag;
+        
+        
+        for(i = 0; i < nodes.length-1;i++)
+        {
+            flag = true;
+            for(j = 0; j< nodes.length-i-1; j++)
+            {
+                if(nodes[j].compareTo(nodes[j+1])>0)
+                {
+                    aux = nodes[j];
+                    nodes[j] = nodes[j+1];
+                    nodes[j+1] = aux;
+                    flag = false;
+                }
+            }
+            
+            if(flag)
+            {
+                break;
+            }
+        }
+        
         this.nodes = nodes;
     }
     
@@ -70,4 +95,33 @@ public class Graph {
         return -1;
     }
     
+    public String getNodeName(int index)
+    {
+        return this.nodes[index];
+    }
+
+    public boolean[][] getMatrix() {
+        return matrix;
+    }
+
+    public String[] getNodes() {
+        return nodes;
+    }
+    
+    public String[] getAdjacency(String node)
+    {
+        String salidas = "";
+        for(int i = 0; i<nodes.length; i++)
+        {
+            
+            if(matrix[getNodeIndex(node)][i])
+            {
+                salidas += nodes[i]+"%";
+            }
+        }
+        return salidas.split("%");
+    }
+  
 }
+
+

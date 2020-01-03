@@ -237,7 +237,7 @@ public class BubbleSort extends javax.swing.JFrame {
             
         }
         graph(-1);
-        sleep(1000);
+        sleep(t*1000);
         ImageIcon img = new ImageIcon("C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+(-1)+".png");
         this.jLabel1.setIcon(img); 
         this.jTextArea1.setText("Estado final del arreglo.\nArreglo ordenado.");
@@ -254,7 +254,7 @@ public class BubbleSort extends javax.swing.JFrame {
             for(j = 0; j< n-i-1; j++)
             {
                 graph(count,j,j+1);
-                sleep(100);
+                sleep(200);
                 salidas+="Se comparan "+arr[j]+" y "+arr[j+1]+". %";
                 count++;
                 
@@ -264,7 +264,7 @@ public class BubbleSort extends javax.swing.JFrame {
                     arr[j] = arr[j+1];
                     arr[j+1] = aux;
                     graph(count,j+1,j);
-                    sleep(100);
+                    sleep(200);
                     salidas+= "Ya que "+arr[j+1]+" > "+arr[j]+" se intercambian. %";
                     count++;
                 }
@@ -306,7 +306,10 @@ public class BubbleSort extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
+        jButton1.setBackground(new java.awt.Color(204, 204, 255));
+        jButton1.setFont(new java.awt.Font("Calibri Light", 1, 21)); // NOI18N
         jButton1.setText("Siguiente");
+        jButton1.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -353,16 +356,15 @@ public class BubbleSort extends javax.swing.JFrame {
                 .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 892, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addGap(18, 18, 18)
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 892, Short.MAX_VALUE)))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 892, Short.MAX_VALUE))
                 .addContainerGap(56, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -380,12 +382,12 @@ public class BubbleSort extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();

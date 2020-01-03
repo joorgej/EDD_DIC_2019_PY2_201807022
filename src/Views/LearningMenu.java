@@ -5,9 +5,11 @@
  */
 package Views;
 
+import EDD.Graph;
 import Views.Sorts.BubbleSort;
 import static Objects.Sha256.sha256;
 import Objects.User;
+import Views.Graph.AdjacencyMatrix;
 import Views.Sorts.InsertionSort;
 import java.io.File;
 import java.io.FileReader;
@@ -49,6 +51,7 @@ public class LearningMenu extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jRadioButton1 = new javax.swing.JRadioButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,6 +73,13 @@ public class LearningMenu extends javax.swing.JFrame {
 
         jRadioButton1.setText("Automatico");
 
+        jButton4.setText("Adjacency Matrix");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,7 +91,8 @@ public class LearningMenu extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton3)
                             .addComponent(jButton2)
-                            .addComponent(jButton1)))
+                            .addComponent(jButton1)
+                            .addComponent(jButton4)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(442, 442, 442)
                         .addComponent(jRadioButton1)))
@@ -92,7 +103,9 @@ public class LearningMenu extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(76, 76, 76)
                 .addComponent(jRadioButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 223, Short.MAX_VALUE)
+                .addGap(41, 41, 41)
+                .addComponent(jButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
@@ -184,6 +197,61 @@ public class LearningMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2MouseClicked
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        FileNameExtensionFilter f = new FileNameExtensionFilter("JSON", "json");
+        
+        fc.setFileFilter(f);
+        
+        int seleccion = fc.showOpenDialog(this);
+        
+        if(seleccion == JFileChooser.APPROVE_OPTION)
+        {
+            JSONParser parser = new JSONParser();
+            try
+            {
+                
+                File fichero = fc.getSelectedFile();
+                Reader reader = new FileReader(fichero);
+                JSONObject object = (JSONObject) parser.parse(reader);
+                JSONArray jsonarr = (JSONArray) object.get("Graph");
+                Graph grafo = new Graph(jsonarr.size());
+                String[] nodes = new String[jsonarr.size()];
+                for(int i = 0; i<jsonarr.size(); i++)
+                {
+                    JSONObject obj = (JSONObject) jsonarr.get(i);
+                    
+                    nodes[i]=(String)obj.get("Node");
+                }
+                grafo.addNodes(nodes);
+                
+                for(int i = 0; i<jsonarr.size(); i++)
+                {
+                    JSONObject obj = (JSONObject) jsonarr.get(i);
+                    JSONArray union = (JSONArray) obj.get("Adjacency");
+                    String[] uniones = new String[union.size()];
+                    
+                    for(int j = 0; j<union.size(); j++)
+                    {
+                        JSONObject node = (JSONObject) union.get(j);
+                        uniones[j] = (String)node.get("Node");
+                        
+                    }
+                    grafo.addUniones((String)obj.get("Node"), uniones);
+                    
+                }
+                
+                this.setVisible(false);
+                AdjacencyMatrix s = new AdjacencyMatrix(grafo.getNodes(),grafo.getMatrix(),true,2);
+                this.dispose();
+            }
+            catch(Exception e)
+            {
+                System.out.println("JSONArray ERROR!");
+            }
+            
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     
     
     
@@ -194,6 +262,7 @@ public class LearningMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JRadioButton jRadioButton1;
     // End of variables declaration//GEN-END:variables
 }
