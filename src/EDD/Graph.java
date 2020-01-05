@@ -68,7 +68,11 @@ public class Graph {
             
             for(int j = 0; j<union.length; j++)
             {
-                this.matrix[i][getNodeIndex(union[j])]=true;
+                if(getNodeIndex(union[j])!=-1)
+                {
+                    this.matrix[i][getNodeIndex(union[j])]=true;
+                }
+                
             }
         }
         

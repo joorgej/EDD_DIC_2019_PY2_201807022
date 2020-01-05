@@ -5,6 +5,10 @@
  */
 package EDD;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 /**
  *
  * @author Jorge
@@ -95,5 +99,78 @@ public class Stack {
             aux = aux.getNext();
         }
         return false;
+    }
+    
+    public void graph(int count, int news)
+    {
+        Node aux = this.top;
+        int c = 0;
+        FileWriter fw = null;
+        PrintWriter pw = null;
+        String w = "";
+        try
+        {
+            fw = new FileWriter("C:\\EDDProyect\\graph.dot");
+            pw = new PrintWriter(fw);
+            
+            w += "digraph pila{  \n" ;
+            w += "rankdir = TB; ";
+            w += "node [shape = rectangle, width = 0.75, height = 0.75]; \n";
+            if (aux == null) {
+                w += "nodo [label =\"PILA VACIA\", shape = plaintext]";
+            } else {
+                while (aux != null) {
+                    if (c < news) {
+                        w += "node" + c + " [label=\"" + aux.getData() + "\", style=filled, fillcolor=fireBrick1];";
+                    }else{
+                        w += "node" + c + " [label=\"" + aux.getData() + "\", style=filled, fillcolor=lightblue];";
+                    }
+                    aux = aux.getNext();
+                    c++;
+                }
+
+                aux = this.top;
+                c = 0;
+
+                while (aux.getNext() != null) {
+                    w += "node" + c + " -> node" +( c + 1 )+ ";";
+                    aux = aux.getNext();
+                    c++;
+                }
+            }
+            w += "}";
+            
+            pw.println(w);
+            
+            
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if(fw != null)
+                {
+                    fw.close();
+                }
+            }
+            catch(Exception x)
+            {
+                x.printStackTrace();
+            }
+        }
+        
+        try 
+        {
+            String [] cmd = {"dot","-Tpng","C:\\EDDProyect\\graph.dot", "-o", "C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+count+".png"};
+            Runtime.getRuntime().exec(cmd); 
+        } 
+        catch (IOException ioe) 
+        {
+            System.out.println (ioe);
+        }
     }
 }

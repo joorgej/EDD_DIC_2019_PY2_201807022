@@ -9,6 +9,7 @@ import EDD.Graph;
 import EDD.Queue;
 import Views.Sorts.*;
 import Views.LearningMenu;
+import java.awt.Color;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,7 +23,7 @@ import javax.swing.ImageIcon;
  *
  * @author Jorge
  */
-public class widthTour extends javax.swing.JFrame {
+public class BreadthSearch extends javax.swing.JFrame {
 
     /**
      * Creates new form Sorts
@@ -33,13 +34,15 @@ public class widthTour extends javax.swing.JFrame {
     Graph grafo;
     String[] nodes;
     boolean[][] adjacency;
+    boolean[] nodesActivos;
     int count = 0;
+    int count2 = 0;
     int t;
     int max = 0;
     String[] salida;
     
     
-    public widthTour(Graph grafo, boolean auto, int t) throws InterruptedException {
+    public BreadthSearch(Graph grafo, boolean auto, int t) throws InterruptedException {
         initComponents();
         proyecto_2.Proyecto_2.grobalImageCount++;
         this.nodes = grafo.getNodes();
@@ -47,17 +50,23 @@ public class widthTour extends javax.swing.JFrame {
         
         cola = new Queue();
         this.grafo = grafo;
+        this.procesadors = new Queue();
+        this.nodesActivos = new boolean[nodes.length];
         
         this.t = t;
         this.setLocationRelativeTo(null);
-        graph(-2,-1,-1,false);
+        graph(-1);
         sleep(250);
-        graph(-1,-1,-1);
-        sleep(250);
-        ImageIcon img = new ImageIcon("C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+(-1)+".png");
+        cola.graph(-2, false);
+        sleep(200);
+        cola.graph(-3, 0);
+        sleep(200);
+        ImageIcon img = new ImageIcon("C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graphi"+(-1)+".png");
         this.jLabel1.setIcon(img);
         img = new ImageIcon("C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+(-2)+".png");
         this.jLabel5.setIcon(img);
+        img = new ImageIcon("C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+(-3)+".png");
+        this.jLabel6.setIcon(img);
         this.jTextArea1.setText("Estado inicial de la matriz. \nMatriz vacia.");
         this.jButton1.setVisible(!auto);
         
@@ -69,8 +78,10 @@ public class widthTour extends javax.swing.JFrame {
                 public void run() {
                     try {
                         breadthSearch();
+                        breadthSearch2();
+                        
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(widthTour.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(BreadthSearch.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             });
@@ -84,7 +95,7 @@ public class widthTour extends javax.swing.JFrame {
                     try {
                         breadthSearch();
                     } catch (InterruptedException ex) {
-                        Logger.getLogger(widthTour.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(BreadthSearch.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             });
@@ -97,7 +108,7 @@ public class widthTour extends javax.swing.JFrame {
     }
     
     
-    public void graph(int c, int one, int two )
+    public void graph(int c)
     {
         FileWriter fw = null;
         PrintWriter pw = null;
@@ -121,13 +132,9 @@ public class widthTour extends javax.swing.JFrame {
                 {
                     if(adjacency[i][j])
                     {
-                        if((i==one && j == two)||(j==one && i== two))
-                        {
-                            w +="nodo"+i+" -> "+"nodo"+j+" [dir = both, color=fireBrick1];";
-                        }else
-                        {
-                            w +="nodo"+i+" -> "+"nodo"+j+" ;";
-                        }
+                        
+                            w +="nodo"+i+" -> "+"nodo"+j+"  [arrowhead=none];";
+                       
                         
                     }
                     
@@ -160,7 +167,7 @@ public class widthTour extends javax.swing.JFrame {
         
         try 
         {
-            String [] cmd = {"dot","-Tpng","C:\\EDDProyect\\graph.dot", "-o", "C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+c+".png"};
+            String [] cmd = {"dot","-Tpng","C:\\EDDProyect\\graph.dot", "-o", "C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graphi"+c+".png"};
             Runtime.getRuntime().exec(cmd); 
         } 
         catch (IOException ioe) 
@@ -169,7 +176,7 @@ public class widthTour extends javax.swing.JFrame {
         }
     }
     
-    public void graph(int ultimo, int one, int two, boolean entra)
+    public void graph(int c, int recor[][], int[] nod)
     {
         FileWriter fw = null;
         PrintWriter pw = null;
@@ -179,41 +186,50 @@ public class widthTour extends javax.swing.JFrame {
             fw = new FileWriter("C:\\EDDProyect\\graph.dot");
             pw = new PrintWriter(fw);
             
-            w += "digraph matriz{  \n" ;
-            w += "node [shape=record]; \n";
-            w += "nodo [label = <<table border=\"0\" cellspacing=\"0\"> <tr> <td border=\"0\"></td>";
+            w += "digraph grafo {  \n" ;
+            w += "node [shape=circle]; \n";
+            
             for(int i = 0; i<nodes.length ; i++)
             {
-                
-                 w += "<td port=\"port"+i+"\" border=\"1\" bgcolor=\"#7BE62F\" fixedsize=\"true\" width=\"35\" height=\"35\">"+nodes[i]+"</td>";
-                
+                boolean flag = true;
+                for(int j = 0; j<nod.length; j++)
+                {
+                    if(nod[j]==i){
+                        w += "nodo"+i+" [label = \""+nodes[i]+"\", style=filled, fillcolor = \"#FD5048\" ];";
+                        flag = false;
+                    }
+                       
+                }
+                if(flag)
+                {
+                    w += "nodo"+i+" [label = \""+nodes[i]+"\", style=filled, fillcolor = lightblue ];";
+                }
+                         
             }
             
-             w += "</tr>";
             for(int i = 0; i<nodes.length; i++)
             {
-                w += "<tr>";
-                w += "<td port=\"port"+i+"\" border=\"1\" bgcolor=\"#FD5048\" fixedsize=\"true\" width=\"35\" height=\"35\">"+nodes[i]+"</td>";
-                for(int j = 0; j<nodes.length; j++)
-                {
-                    if(i == one && j == two && entra)
-                    {
-                        w += "<td port=\"port"+i+"\" border=\"1\" bgcolor=\"#D573FF\" fixedsize=\"true\" width=\"35\" height=\"35\">"+"true"+"</td>";
+                for (int j = i; j < nodes.length; j++) {
+                    boolean flag = true;
+                    if (adjacency[i][j]) {
+                        for (int k = 0; k < recor.length; k++) {
+                            if ((i == recor[k][0] && j == recor[k][1])||(j == recor[k][0] && i == recor[k][1])) {
+                                w += "nodo" + i + " -> " + "nodo" + j + " [arrowhead=none, color=fireBrick1, penwidth=\"2.5\"];";
+                                flag = false;
+                            }
+
+                        }
+                        if (flag) {
+                            w += "nodo" + i + " -> " + "nodo" + j + "  [arrowhead=none];";
+                        }
                     }
-                    else
-                    {
-                         w += "<td port=\"port"+i+"\" border=\"1\" fixedsize=\"true\" width=\"35\" height=\"35\">"+"false"+"</td>";
-                    }
-                    
+
                 }
-                w += "</tr>";
             }
-            w += "</table>>]; \n";
-            w += "}" ;
-            
+            w += "}";
+
             pw.println(w);
-            
-            
+
         }
         catch(Exception e)
         {
@@ -236,7 +252,7 @@ public class widthTour extends javax.swing.JFrame {
         
         try 
         {
-            String [] cmd = {"dot","-Tpng","C:\\EDDProyect\\graph.dot", "-o", "C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+ultimo+".png"};
+            String [] cmd = {"dot","-Tpng","C:\\EDDProyect\\graph.dot", "-o", "C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graphi"+c+".png"};
             Runtime.getRuntime().exec(cmd); 
         } 
         catch (IOException ioe) 
@@ -245,37 +261,203 @@ public class widthTour extends javax.swing.JFrame {
         }
     }
     
+    
+    public void graph2(int c, int recor[][], int[] nod)
+    {
+        FileWriter fw = null;
+        PrintWriter pw = null;
+        String w = "";
+        try
+        {
+            fw = new FileWriter("C:\\EDDProyect\\graph.dot");
+            pw = new PrintWriter(fw);
+            
+            w += "digraph grafo {  \n" ;
+            w += "rankdir = TB; \n";
+            w += "node [shape=circle]; \n";
+            
+            w += "nodo"+0+" [label = \""+nodes[0]+"\", style=filled, fillcolor = \"#D573FF\" ];";
+            
+            for(int i = 1; i<nodes.length ; i++)
+            {
+                w += "nodo"+i+" [label = \""+nodes[i]+"\", style=filled, fillcolor = \"#FD5048\" ];";         
+            }
+            
+            for(int i = 0; i<nodes.length; i++)
+            {
+                for (int j = i; j < nodes.length; j++) {
+                    if (adjacency[i][j]) {
+                        for (int k = 0; k < recor.length; k++) {
+                            if ((i == recor[k][0] && j == recor[k][1])||(j == recor[k][0] && i == recor[k][1])) {
+                                w += "nodo" + i + " -> " + "nodo" + j + " [arrowhead=none, color=fireBrick1, penwidth=\"2.5\"];";
+                                
+                            }
+
+                        }
+                    }
+
+                }
+            }
+            w += "}";
+
+            pw.println(w);
+
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if(fw != null)
+                {
+                    fw.close();
+                }
+            }
+            catch(Exception x)
+            {
+                x.printStackTrace();
+            }
+        }
+        
+        try 
+        {
+            String [] cmd = {"dot","-Tpng","C:\\EDDProyect\\graph.dot", "-o", "C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+c+".png"};
+            Runtime.getRuntime().exec(cmd); 
+        } 
+        catch (IOException ioe) 
+        {
+            System.out.println (ioe);
+        }
+    }
+    
+    
     public void breadthSearch() throws InterruptedException
     {
-        
+        try {
+
+            Queue aux = new Queue();
+            int[][] recorrido = new int[nodes.length - 1][2];
+            int[] nod = new int[nodes.length];
+
+            graph(count2);
+            sleep(200);
+            count2++;
+
+            int recorre = 0;
+            cola.enqueue(nodes[0]);
+            aux.enqueue(nodes[0]);
+            nod[0] = 0;
+            String[] adjacencys;
+
+            cola.graph(count, 1);
+            sleep(200);
+            count++;
+            procesadors.graph(count, false);
+            sleep(200);
+            count++;
+            graph(count2, recorrido, nod);
+            sleep(200);
+            count2++;
+
+            do {
+
+                adjacencys = this.grafo.getAdjacency(cola.peek());
+                String node = cola.peek();
+
+                int encolados = 0;
+                procesadors.enqueue(cola.dequeue());
+                String n = "";
+
+                for (int j = 0; j < adjacencys.length; j++) {
+                    if (!aux.exist(adjacencys[j])) {
+                        cola.enqueue(adjacencys[j]);
+                        aux.enqueue(adjacencys[j]);
+                        recorrido[recorre][0] = grafo.getNodeIndex(node);
+                        recorrido[recorre][1] = grafo.getNodeIndex(adjacencys[j]);
+                        recorre++;
+                        nod[recorre] = grafo.getNodeIndex(adjacencys[j]);
+                        graph(count2, recorrido, nod);
+                        sleep(200);
+                        count2++;
+
+                        encolados++;
+                    }
+
+                }
+
+                cola.graph(count, encolados);
+                sleep(200);
+                count++;
+                procesadors.graph(count, true);
+                sleep(200);
+                count++;
+
+            } while (!cola.isEmpty());
+
+            graph2(-4, recorrido, nod);
+            sleep(200);
+            cola.graph(-5, 0);
+            sleep(200);
+            procesadors.graph(-6, false);
+            sleep(200);
+
+            max = count;
+            count = 0;
+            count2 = 0;
+
+        } catch (Exception e) {
+            System.out.println("Algo salio mal :(");
+        }
         
         
     }
     
     public void breadthSearch2() throws InterruptedException {
-        int i = 0;
-        if (i < nodes.length) {
-            String[] adjacencys = this.grafo.getAdjacency(nodes[i]);
-            i++;
-            for (int j = 0; j < adjacencys.length; j++) {
-                if (!this.procesadors.exist(adjacencys[j])) {
-                    cola.enqueue(adjacencys[j]);
+       
+        try {
+            for (int i = 0; i <= max; i++) {
+                sleep(t * 1000);
+                if (count < max) {
+                    ImageIcon img = new ImageIcon("C:\\EDDProyect\\" + proyecto_2.Proyecto_2.grobalImageCount + "graph" + count + ".png");
+                    this.jLabel6.setIcon(img);
+                    this.jLabel6.repaint();
+
+                    img = new ImageIcon("C:\\EDDProyect\\" + proyecto_2.Proyecto_2.grobalImageCount + "graph" + (count + 1) + ".png");
+                    this.jLabel5.setIcon(img);
+                    this.jLabel5.repaint();
+
+                    img = new ImageIcon("C:\\EDDProyect\\" + proyecto_2.Proyecto_2.grobalImageCount + "graphi" + (count2) + ".png");
+                    this.jLabel1.setIcon(img);
+                    this.jLabel1.repaint();
+
+                    //this.jTextArea1.setText(salida[count/2]);
+                    count++;
+                    count++;
+                    count2++;
+                } else if (count == max) {
+                    ImageIcon img = new ImageIcon("C:\\EDDProyect\\" + proyecto_2.Proyecto_2.grobalImageCount + "graph" + (-5) + ".png");
+                    this.jLabel6.setIcon(img);
+                    this.jLabel6.repaint();
+                    count++;
+                    img = new ImageIcon("C:\\EDDProyect\\" + proyecto_2.Proyecto_2.grobalImageCount + "graph" + (-6) + ".png");
+                    this.jLabel5.setIcon(img);
+                    this.jLabel5.repaint();
+
+                    img = new ImageIcon("C:\\EDDProyect\\" + proyecto_2.Proyecto_2.grobalImageCount + "graph" + (-4) + ".png");
+                    this.jLabel1.setIcon(img);
+                    this.jLabel1.repaint();
+                    this.jTextArea1.setText("Estado final de la matriz de adyacecia.\nMatriz terminada.");
                 }
-            }
-            
-            while (!cola.isEmpty()) {
-                procesadors.enqueue(cola.dequeue());
-                adjacencys = this.grafo.getAdjacency(cola.peek());
-
-                for (int j = 0; j < adjacencys.length; j++) {
-                    if (!this.procesadors.exist(adjacencys[j])) {
-                        cola.enqueue(adjacencys[j]);
-                    }
-
-                }
 
             }
+
+        } catch (Exception e) {
+            System.out.println("");
         }
+
     }
     
     
@@ -348,16 +530,25 @@ public class widthTour extends javax.swing.JFrame {
         jLabel3.setText("Breadth-First Search");
 
         jLabel4.setFont(new java.awt.Font("Calibri Light", 0, 24)); // NOI18N
-        jLabel4.setText("(Recorrido por Profundidad)");
+        jLabel4.setText("(Recorrido por Anchura)");
 
+        jScrollPane4.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setAutoscrolls(true);
         jScrollPane4.setViewportView(jLabel5);
 
+        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setAutoscrolls(true);
         jScrollPane2.setViewportView(jLabel1);
 
+        jScrollPane5.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setAutoscrolls(true);
         jScrollPane5.setViewportView(jLabel6);
@@ -373,7 +564,7 @@ public class widthTour extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 376, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 413, Short.MAX_VALUE)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -399,11 +590,11 @@ public class widthTour extends javax.swing.JFrame {
                     .addComponent(jScrollPane4)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(41, 41, 41)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(29, 29, 29)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addGap(33, 33, 33))
         );
 
         pack();
@@ -420,26 +611,36 @@ public class widthTour extends javax.swing.JFrame {
         if(count<max)
         {
             ImageIcon img = new ImageIcon("C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+count+".png");
-            this.jLabel1.setIcon(img);  
-            this.jLabel1.repaint();
+            this.jLabel6.setIcon(img);  
+            this.jLabel6.repaint();
             
             img = new ImageIcon("C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+(count+1)+".png");
             this.jLabel5.setIcon(img);  
             this.jLabel5.repaint();
             
-            this.jTextArea1.setText(salida[count/2]);
+            img = new ImageIcon("C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graphi"+(count2)+".png");
+            this.jLabel1.setIcon(img);  
+            this.jLabel1.repaint();
+            
+            //this.jTextArea1.setText(salida[count/2]);
             
             count++;
             count++;
+            count2++;
         }
         else if(count == max)
         {
-            ImageIcon img = new ImageIcon("C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+(-1)+".png");
-            this.jLabel1.setIcon(img); 
-            this.jLabel1.repaint();
-            img = new ImageIcon("C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+(-3)+".png");
+            ImageIcon img = new ImageIcon("C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+(-5)+".png");
+            this.jLabel6.setIcon(img); 
+            this.jLabel6.repaint();
+            count++;
+            img = new ImageIcon("C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+(-6)+".png");
             this.jLabel5.setIcon(img);  
             this.jLabel5.repaint();
+            
+            img = new ImageIcon("C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+(-4)+".png");
+            this.jLabel1.setIcon(img);  
+            this.jLabel1.repaint();
             this.jTextArea1.setText("Estado final de la matriz de adyacecia.\nMatriz terminada.");
         }
         

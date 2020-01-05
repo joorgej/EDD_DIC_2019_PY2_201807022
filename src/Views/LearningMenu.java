@@ -10,6 +10,8 @@ import Views.Sorts.BubbleSort;
 import static Objects.Sha256.sha256;
 import Objects.User;
 import Views.Graph.AdjacencyMatrix;
+import Views.Graph.BreadthSearch;
+import Views.Graph.DepthSearch;
 import Views.Sorts.InsertionSort;
 import java.io.File;
 import java.io.FileReader;
@@ -52,6 +54,8 @@ public class LearningMenu extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jRadioButton1 = new javax.swing.JRadioButton();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -80,6 +84,20 @@ public class LearningMenu extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setText("Breadth Search");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Depth Search");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -92,7 +110,9 @@ public class LearningMenu extends javax.swing.JFrame {
                             .addComponent(jButton3)
                             .addComponent(jButton2)
                             .addComponent(jButton1)
-                            .addComponent(jButton4)))
+                            .addComponent(jButton4)
+                            .addComponent(jButton5)
+                            .addComponent(jButton6)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(442, 442, 442)
                         .addComponent(jRadioButton1)))
@@ -105,7 +125,11 @@ public class LearningMenu extends javax.swing.JFrame {
                 .addComponent(jRadioButton1)
                 .addGap(41, 41, 41)
                 .addComponent(jButton4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton5)
+                .addGap(18, 18, 18)
+                .addComponent(jButton6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
@@ -252,6 +276,116 @@ public class LearningMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        FileNameExtensionFilter f = new FileNameExtensionFilter("JSON", "json");
+        
+        fc.setFileFilter(f);
+        
+        int seleccion = fc.showOpenDialog(this);
+        
+        if(seleccion == JFileChooser.APPROVE_OPTION)
+        {
+            JSONParser parser = new JSONParser();
+            try
+            {
+                
+                File fichero = fc.getSelectedFile();
+                Reader reader = new FileReader(fichero);
+                JSONObject object = (JSONObject) parser.parse(reader);
+                JSONArray jsonarr = (JSONArray) object.get("Graph");
+                Graph grafo = new Graph(jsonarr.size());
+                String[] nodes = new String[jsonarr.size()];
+                for(int i = 0; i<jsonarr.size(); i++)
+                {
+                    JSONObject obj = (JSONObject) jsonarr.get(i);
+                    
+                    nodes[i]=(String)obj.get("Node");
+                }
+                grafo.addNodes(nodes);
+                
+                for(int i = 0; i<jsonarr.size(); i++)
+                {
+                    JSONObject obj = (JSONObject) jsonarr.get(i);
+                    JSONArray union = (JSONArray) obj.get("Adjacency");
+                    String[] uniones = new String[union.size()];
+                    
+                    for(int j = 0; j<union.size(); j++)
+                    {
+                        JSONObject node = (JSONObject) union.get(j);
+                        uniones[j] = (String)node.get("Node");
+                        
+                    }
+                    grafo.addUniones((String)obj.get("Node"), uniones);
+                    
+                }
+                
+                this.setVisible(false);
+                BreadthSearch bs = new BreadthSearch(grafo,true,2);
+                this.dispose();
+            }
+            catch(Exception e)
+            {
+                System.out.println("JSONArray ERROR!");
+            }
+            
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        FileNameExtensionFilter f = new FileNameExtensionFilter("JSON", "json");
+        
+        fc.setFileFilter(f);
+        
+        int seleccion = fc.showOpenDialog(this);
+        
+        if(seleccion == JFileChooser.APPROVE_OPTION)
+        {
+            JSONParser parser = new JSONParser();
+            try
+            {
+                
+                File fichero = fc.getSelectedFile();
+                Reader reader = new FileReader(fichero);
+                JSONObject object = (JSONObject) parser.parse(reader);
+                JSONArray jsonarr = (JSONArray) object.get("Graph");
+                Graph grafo = new Graph(jsonarr.size());
+                String[] nodes = new String[jsonarr.size()];
+                for(int i = 0; i<jsonarr.size(); i++)
+                {
+                    JSONObject obj = (JSONObject) jsonarr.get(i);
+                    
+                    nodes[i]=(String)obj.get("Node");
+                }
+                grafo.addNodes(nodes);
+                
+                for(int i = 0; i<jsonarr.size(); i++)
+                {
+                    JSONObject obj = (JSONObject) jsonarr.get(i);
+                    JSONArray union = (JSONArray) obj.get("Adjacency");
+                    String[] uniones = new String[union.size()];
+                    
+                    for(int j = 0; j<union.size(); j++)
+                    {
+                        JSONObject node = (JSONObject) union.get(j);
+                        uniones[j] = (String)node.get("Node");
+                        
+                    }
+                    grafo.addUniones((String)obj.get("Node"), uniones);
+                    
+                }
+                
+                this.setVisible(false);
+                DepthSearch bs = new DepthSearch(grafo,false,2);
+                this.dispose();
+            }
+            catch(Exception e)
+            {
+                System.out.println("JSONArray ERROR!");
+            }
+            
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
     
     
     
@@ -263,6 +397,8 @@ public class LearningMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JRadioButton jRadioButton1;
     // End of variables declaration//GEN-END:variables
 }

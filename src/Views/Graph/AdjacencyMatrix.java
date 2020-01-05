@@ -128,7 +128,7 @@ public class AdjacencyMatrix extends javax.swing.JFrame {
                             w +="nodo"+i+" -> "+"nodo"+j+" [dir = both, color=fireBrick1];";
                         }else
                         {
-                            w +="nodo"+i+" -> "+"nodo"+j+" ;";
+                            w +="nodo"+i+" -> "+"nodo"+j+" [dir = both];";
                         }
                         
                     }
