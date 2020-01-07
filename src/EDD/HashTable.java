@@ -220,7 +220,7 @@ public class HashTable
             w += "digraph hash{  \n";
             w += "rankdir = LR; ";
             w += "node [shape = none]; \n";
-            w += "nodo1 [label = <<table border=\"0\" cellspacing=\"0\">";
+            w += "nodo1 [label = <<table border=\"0\" cellspacing=\"0\">\n";
             for(int i = 0; i<table.length; i++)
             {
                 if(table[i]!=null)
@@ -228,24 +228,23 @@ public class HashTable
                     w += "<tr><td port=\"port" + c + "\" border=\"1\" fixedsize=\"true\" width=\"100\" height=\"72\">"; 
                     w += "No:    "+(c+1)+"<br/>"; 
                     w += "Llave: "+i;
-                    w += "</td></tr>";
+                    w += "</td></tr>\n";
                     c++;
                 }
             }
-            c=0;
+           
             w += "</table>>]; \n";
-            
+            c=0;
             w += "nodo2 [label = <<table border=\"0\" cellspacing=\"0\">";
             for(int i = 0; i<table.length; i++)
             {
                 if(table[i]!=null)
                 {
-                    w += "<tr><td port=\"porti" + c + "\" border=\"1\" fixedsize=\"true\" width=\"600\" height=\"75\">"; 
-                    w += "Nombre:     "+table[i].getNombre() +"<br/>";
-                    w += "Apellido:   "+table[i].getApellido()+"<br/>";
-                    w += "Carnet:     "+table[i].getCarnetS()+"<br/>";
-                    w += "Contraseña: "+table[i].getContraseña()+"<br/>";
-                    w += "</td></tr>";
+                    w += "<tr><td port=\"porti" + c + "\" border=\"1\" fixedsize=\"true\" width=\"400\" height=\"75\">"; 
+                    w += " Nombre:    "+table[i].getNombre() +"<br/>";
+                    w += " Apellido:  "+table[i].getApellido()+"<br/>";
+                    w += " Carnet:    "+table[i].getCarnetS()+"";
+                    w += " </td></tr>\n";
                     c++;
                 }
             }

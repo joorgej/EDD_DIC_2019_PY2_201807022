@@ -181,7 +181,6 @@ public class Administrator extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Calibri Light", 0, 24)); // NOI18N
         jLabel5.setText("(Tabla Hash)");
 
-        jButton5.setBackground(new java.awt.Color(255, 255, 255));
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/return.png"))); // NOI18N
         jButton5.setAlignmentX(0.5F);
         jButton5.setBorderPainted(false);
@@ -598,7 +597,7 @@ public class Administrator extends javax.swing.JFrame {
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         proyecto_2.Proyecto_2.ht.graph(count);
         try {
-            sleep(200);
+            sleep(300);
         } catch (InterruptedException ex) {
             Logger.getLogger(Administrator.class.getName()).log(Level.SEVERE, null, ex);
         }
