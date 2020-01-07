@@ -315,6 +315,11 @@ public class BubbleSort extends javax.swing.JFrame {
                 jButton1MouseClicked(evt);
             }
         });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(255, 255, 255));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/return.png"))); // NOI18N
@@ -401,6 +406,13 @@ public class BubbleSort extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         
+        
+        
+        
+        
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         if(count<max)
         {
             ImageIcon img = new ImageIcon("C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+count+".png");
@@ -416,10 +428,7 @@ public class BubbleSort extends javax.swing.JFrame {
             this.jLabel1.repaint();
             this.jTextArea1.setText("Estado final del arreglo.\nArreglo ordenado.");
         }
-        
-        
-        
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     
 

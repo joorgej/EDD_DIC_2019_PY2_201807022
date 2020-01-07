@@ -125,14 +125,14 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Calibri Light" size="36" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Bubble Sort"/>
+        <Property name="text" type="java.lang.String" value="Quick Sort"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/img/claveBubbleSort.png"/>
+          <Image iconType="3" name="/img/claveQuickSort.png"/>
         </Property>
       </Properties>
     </Component>
@@ -141,7 +141,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Calibri Light" size="24" style="0"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="(Ordenamiento de Burbuja)"/>
+        <Property name="text" type="java.lang.String" value="(Ordenamiento Rapido)"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane3">

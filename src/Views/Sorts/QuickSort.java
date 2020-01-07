@@ -30,6 +30,7 @@ public class QuickSort extends javax.swing.JFrame {
     int t;
     int max = 0;
     String[] salida;
+    String auxSalida = "";
     
     
     public QuickSort(int [] arr, boolean auto, int t) throws InterruptedException {
@@ -81,7 +82,7 @@ public class QuickSort extends javax.swing.JFrame {
     }
     
     
-    public void graph(int c, int one, int two)
+    public void graph(int c, int one, int two,int tree, int pivote)
     {
         FileWriter fw = null;
         PrintWriter pw = null;
@@ -98,11 +99,19 @@ public class QuickSort extends javax.swing.JFrame {
             {
                 if(i==one)
                 {
-                     w += "<td port=\"port"+i+"\" border=\"1\" bgcolor=\"red\" fixedsize=\"true\" width=\"50\" height=\"50\">"+arr[i]+"</td>";
+                     w += "<td port=\"port"+i+"\" border=\"1\" bgcolor=\"lightblue\" fixedsize=\"true\" width=\"50\" height=\"50\">"+arr[i]+"</td>";
                 }
                 else if(i == two)
                 {
-                     w += "<td port=\"port"+i+"\" border=\"1\" bgcolor=\"lightblue\" fixedsize=\"true\" width=\"50\" height=\"50\">"+arr[i]+"</td>";
+                     w += "<td port=\"port"+i+"\" border=\"1\" bgcolor=\"#FD5048\" fixedsize=\"true\" width=\"50\" height=\"50\">"+arr[i]+"</td>";
+                }
+                else if(i== tree)
+                {
+                    w += "<td port=\"port"+i+"\" border=\"1\" bgcolor=\"#B7EA78\" fixedsize=\"true\" width=\"50\" height=\"50\">"+arr[i]+"</td>";
+                }
+                else if(i == pivote)
+                {
+                    w += "<td port=\"port"+i+"\" border=\"1\" bgcolor=\"#D573FF\" fixedsize=\"true\" width=\"50\" height=\"50\">"+arr[i]+"</td>";
                 }
                 else
                 {
@@ -205,76 +214,180 @@ public class QuickSort extends javax.swing.JFrame {
     
     public void quickSort() throws InterruptedException
     {
-        int i, j, aux, n;
-        n = arr.length;
         
-        for(i = 0; i < n-1;i++)
+        quicky(0, arr.length - 1);
+        graph(-1);
+        sleep(200);
+        max = count;
+        count=0;
+        this.salida = this.auxSalida.split("%");
+
+    }
+    
+    private void quicky(int low, int high) throws InterruptedException
+    {
+        if(low < high)
         {
-            for(j = 0; j< n-i-1; j++)
+            int part = partition(low, high);
+            
+            quicky(low, part-1);
+            
+            quicky(part+1, high);
+            
+        }
+    }
+    private int partition(int low, int high) throws InterruptedException
+    {
+        boolean flag = false;
+        int pivot = arr[high];
+        int i = low-1;
+        for(int j=low; j<high; j++)
+        {
+            flag = false;
+            if(arr[j]<pivot)
             {
-                graph(count,j,j+1);
-                sleep(t*1000);
-                ImageIcon img = new ImageIcon("C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+count+".png");
-                this.jLabel1.setIcon(img); 
-                this.jLabel1.repaint();
-                this.jTextArea1.setText("Se comparan "+arr[j]+" y "+arr[j+1]+".");
-                count++;
                 
-                if(arr[j]>arr[j+1])
+                System.out.println("se aumenta aqui");
+                if(i!=j)
                 {
-                    aux = arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1] = aux;
-                    graph(count,j+1,j);
-                    sleep(t*1000);
-                    img = new ImageIcon("C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+count+".png");
-                    this.jLabel1.setIcon(img);  
-                    this.jLabel1.repaint();
-                    this.jTextArea1.setText("Ya que "+arr[j+1]+" > "+arr[j]+" se intercambian.");
+                    this.auxSalida +="Se compara "+arr[j]+" con "+pivot+ ".%";
+                    graph(count,i,j,-1,high);
+                    sleep(200);
                     count++;
+                    flag = true;
+                }
+                i++;
+                int aux = arr[i];
+                arr[i] = arr[j];
+                arr[j] = aux;
+                
+            }
+            if(i!=j)
+            {
+                if(flag)
+                {
+                    this.auxSalida +="Ya que "+arr[i]+" < "+pivot+", se intercambia "+arr[i]+" con "+arr[j]+" y se aumentan las 2 posiciones, mayor y menor.";
+                    graph(count,i-1,i,j,high);
+                    sleep(200);
+                    count++;
+                }
+                else
+                {
+                    this.auxSalida +="Se compara "+arr[j]+" con "+pivot+ ". \nYa que "+arr[j]+" >= "+pivot+" se aumenta solamente la posicion mayor.";
+                    
+                    graph(count,i,j,-1,high);
+                    System.out.println(i);
+                    sleep(200);
+                    count++;
+                }
+                
+                if(high-1==j)
+                {
+                    this.auxSalida +="\n\nSe cambia el pivote, ya que la posicion mayor es igual al la posicion del pivote.%";
+                }
+                else
+                {
+                    this.auxSalida +="%";
                 }
             }
             
+            
         }
-        graph(-1);
-        sleep(1000);
-        ImageIcon img = new ImageIcon("C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graph"+(-1)+".png");
-        this.jLabel1.setIcon(img); 
-        this.jTextArea1.setText("Estado final del arreglo.\nArreglo ordenado.");
+        
+        int aux = arr[i+1];
+        arr[i+1] = arr[high];
+        arr[high] = aux;
+        
+        return i+1;
     }
     
     public void quickSort2() throws InterruptedException
     {
-        int i, j, aux, n;
-        n = arr.length;
-        String salidas = "";
         
-        for(i = 0; i < n-1;i++)
+        quicky2(0, arr.length - 1);
+        graph(-1);
+        sleep(200);
+        max = count;
+        count=0;
+        this.salida = this.auxSalida.split("%");
+
+    }
+    
+    private void quicky2(int low, int high) throws InterruptedException
+    {
+        if(low < high)
         {
-            for(j = 0; j< n-i-1; j++)
+            int part = partition2(low, high);
+            
+            quicky2(low, part-1);
+            
+            quicky2(part+1, high);
+            
+        }
+    }
+    private int partition2(int low, int high) throws InterruptedException
+    {
+        boolean flag = false;
+        int pivot = arr[high];
+        int i = low-1;
+        for(int j=low; j<high; j++)
+        {
+            flag = false;
+            if(arr[j]<pivot)
             {
-                graph(count,j,j+1);
-                sleep(100);
-                salidas+="Se comparan "+arr[j]+" y "+arr[j+1]+". %";
-                count++;
                 
-                if(arr[j]>arr[j+1])
+                System.out.println("se aumenta aqui");
+                if(i!=j)
                 {
-                    aux = arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1] = aux;
-                    graph(count,j+1,j);
-                    sleep(100);
-                    salidas+= "Ya que "+arr[j+1]+" > "+arr[j]+" se intercambian. %";
+                    this.auxSalida +="Se compara "+arr[j]+" con "+pivot+ ".%";
+                    graph(count,i,j,-1,high);
+                    sleep(200);
                     count++;
+                    flag = true;
+                }
+                i++;
+                int aux = arr[i];
+                arr[i] = arr[j];
+                arr[j] = aux;
+                
+            }
+            if(i!=j)
+            {
+                if(flag)
+                {
+                    this.auxSalida +="Ya que "+arr[i]+" < "+pivot+", se intercambia "+arr[i]+" con "+arr[j]+" y se aumentan las 2 posiciones, mayor y menor.";
+                    graph(count,i-1,i,j,high);
+                    sleep(200);
+                    count++;
+                }
+                else
+                {
+                    this.auxSalida +="Se compara "+arr[j]+" con "+pivot+ ". \nYa que "+arr[j]+" >= "+pivot+" se aumenta solamente la posicion mayor.";
+                    
+                    graph(count,i,j,-1,high);
+                    System.out.println(i);
+                    sleep(200);
+                    count++;
+                }
+                
+                if(high-1==j)
+                {
+                    this.auxSalida +="\n\nSe cambia el pivote, ya que la posicion mayor es igual al la posicion del pivote.%";
+                }
+                else
+                {
+                    this.auxSalida +="%";
                 }
             }
             
+            
         }
-        graph(-1);
-        max = count;
-        count=0;
-        salida = salidas.split("%");
+        
+        int aux = arr[i+1];
+        arr[i+1] = arr[high];
+        arr[high] = aux;
+        
+        return i+1;
     }
     
     
@@ -333,13 +446,13 @@ public class QuickSort extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextArea1);
 
         jLabel3.setFont(new java.awt.Font("Calibri Light", 0, 36)); // NOI18N
-        jLabel3.setText("Bubble Sort");
+        jLabel3.setText("Quick Sort");
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/claveBubbleSort.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/claveQuickSort.png"))); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Calibri Light", 0, 24)); // NOI18N
-        jLabel4.setText("(Ordenamiento de Burbuja)");
+        jLabel4.setText("(Ordenamiento Rapido)");
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setAutoscrolls(true);

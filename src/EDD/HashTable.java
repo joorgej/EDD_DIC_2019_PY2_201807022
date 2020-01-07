@@ -6,6 +6,9 @@
 package EDD;
 
 import Objects.User;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 
 /**
@@ -30,12 +33,11 @@ public class HashTable
     {  
         if(0.55<(double)this.used/(double)this.size)
         {
-            System.out.println("rehash");
+            
             reHashing();
         }
         this.table[getAddIndex(data.getCarnet())]=data;
         this.used++;
-        System.out.println("entro");
         
     }
     
@@ -74,7 +76,6 @@ public class HashTable
             {
                 aux[i] = table[k];
                 i++;
-                System.out.println("entro");
             }
         }
         
@@ -123,37 +124,52 @@ public class HashTable
     
     private int getIndex(int carnet)
     {
-        if(table[hashFunc(carnet)].getCarnet()==carnet)
+        try{
+        if(table[hashFunc(carnet)]==null && table[hashFunc(carnet)].getCarnet()==carnet)
         {
             return hashFunc(carnet);
         }
         else
         {
             int iterator = 0;
-            while(table[secundaryHashFunc(carnet, iterator)].getCarnet()!=carnet)
+            while(table[secundaryHashFunc(carnet, iterator)]==null || table[secundaryHashFunc(carnet, iterator)].getCarnet()!=carnet)
             {
                 iterator++;
             }
             return secundaryHashFunc(carnet, iterator);
         }
+        }catch(Exception e){
+            return getIndexSinProblemas(carnet);
+        }
+    }
+    private int getIndexSinProblemas(int carnet)
+    {
+        for(int i = 0; i<table.length; i++){
+            if(table[i]!=null){
+                if(table[i].getCarnet()==carnet){
+                    return i;
+                }
+            }
+        }
+        return 0;
     }
     
     private void reHashing()
     {
+        User[] table = this.table;
         int prime = nextPrime();
-        User[] aux = new User[prime];
-        int j = this.size;
+        int index;
+        this.table = new User[prime];
         this.size = prime;
-        
-        for(int i = 0; i<this.size;i++)
+        for(int i = 0; i<table.length ;i++)
         {
             if(table[i]!=null)
             {
-                aux[getIndex(table[i].getCarnet())]=table[i];
+                index = getAddIndex(table[i].getCarnet());
+                this.table[index]=table[i];
             }
         }
         
-        this.table = aux;
         
     }
     
@@ -187,8 +203,97 @@ public class HashTable
     
     private int secundaryHashFunc(int carnet, int iterator)
     {
-        return ((carnet%(this.size+1))*iterator)%size;
+        return ((carnet%this.size)+1*iterator)%size;
     }
     
-    
+    public void graph(int count)
+    {
+        
+        int c = 0;
+        FileWriter fw = null;
+        PrintWriter pw = null;
+        String w = "";
+        try {
+            fw = new FileWriter("C:\\EDDProyect\\graph.dot");
+            pw = new PrintWriter(fw);
+
+            w += "digraph hash{  \n";
+            w += "rankdir = LR; ";
+            w += "node [shape = none]; \n";
+            w += "nodo1 [label = <<table border=\"0\" cellspacing=\"0\">";
+            for(int i = 0; i<table.length; i++)
+            {
+                if(table[i]!=null)
+                {
+                    w += "<tr><td port=\"port" + c + "\" border=\"1\" fixedsize=\"true\" width=\"100\" height=\"72\">"; 
+                    w += "No:    "+(c+1)+"<br/>"; 
+                    w += "Llave: "+i;
+                    w += "</td></tr>";
+                    c++;
+                }
+            }
+            c=0;
+            w += "</table>>]; \n";
+            
+            w += "nodo2 [label = <<table border=\"0\" cellspacing=\"0\">";
+            for(int i = 0; i<table.length; i++)
+            {
+                if(table[i]!=null)
+                {
+                    w += "<tr><td port=\"porti" + c + "\" border=\"1\" fixedsize=\"true\" width=\"600\" height=\"75\">"; 
+                    w += "Nombre:     "+table[i].getNombre() +"<br/>";
+                    w += "Apellido:   "+table[i].getApellido()+"<br/>";
+                    w += "Carnet:     "+table[i].getCarnetS()+"<br/>";
+                    w += "Contraseña: "+table[i].getContraseña()+"<br/>";
+                    w += "</td></tr>";
+                    c++;
+                }
+            }
+            w += "</table>>]; \n";
+            c=0;
+            for(int i = 0; i<table.length; i++)
+            {
+                if(table[i]!=null)
+                {
+                   w += "nodo1:port"+c+" -> "+"nodo2:porti"+c+"; \n";
+                   c++;
+                }
+            }
+            
+            w += "}";
+            
+
+            pw.println(w);
+            
+            
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            try
+            {
+                if(fw != null)
+                {
+                    fw.close();
+                }
+            }
+            catch(Exception x)
+            {
+                x.printStackTrace();
+            }
+        }
+        
+        try 
+        {
+            String [] cmd = {"dot","-Tpng","C:\\EDDProyect\\graph.dot", "-o", "C:\\EDDProyect\\"+proyecto_2.Proyecto_2.grobalImageCount+"graphT"+count+".png"};
+            Runtime.getRuntime().exec(cmd); 
+        } 
+        catch (IOException ioe) 
+        {
+            System.out.println (ioe);
+        }
+    }
 }

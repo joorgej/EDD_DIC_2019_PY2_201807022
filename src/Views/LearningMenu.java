@@ -5,14 +5,17 @@
  */
 package Views;
 
+import EDD.AVLTree;
 import EDD.Graph;
 import Views.Sorts.BubbleSort;
 import static Objects.Sha256.sha256;
 import Objects.User;
+import Views.AVLTree.AVLTreeCreat;
 import Views.Graph.AdjacencyMatrix;
 import Views.Graph.BreadthSearch;
 import Views.Graph.DepthSearch;
 import Views.Sorts.InsertionSort;
+import Views.Sorts.QuickSort;
 import java.io.File;
 import java.io.FileReader;
 import java.io.Reader;
@@ -52,31 +55,74 @@ public class LearningMenu extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jRadioButton1 = new javax.swing.JRadioButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
+        jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jButton10 = new javax.swing.JButton();
+        jButton11 = new javax.swing.JButton();
+        jButton12 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jRadioButton1 = new javax.swing.JRadioButton();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jButton13 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
+        jButton1.setBackground(new java.awt.Color(255, 83, 83));
+        jButton1.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Bubble Sort");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
             }
         });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
+        jButton2.setBackground(new java.awt.Color(255, 83, 83));
+        jButton2.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Insertion Sort");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
             }
         });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
+        jButton3.setBackground(new java.awt.Color(255, 83, 83));
+        jButton3.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Quick Sort");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
-        jRadioButton1.setText("Automatico");
-
+        jButton4.setBackground(new java.awt.Color(103, 186, 237));
+        jButton4.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
+        jButton4.setForeground(new java.awt.Color(255, 255, 255));
         jButton4.setText("Adjacency Matrix");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,6 +130,9 @@ public class LearningMenu extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setBackground(new java.awt.Color(103, 186, 237));
+        jButton5.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
         jButton5.setText("Breadth Search");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,10 +140,143 @@ public class LearningMenu extends javax.swing.JFrame {
             }
         });
 
+        jButton6.setBackground(new java.awt.Color(103, 186, 237));
+        jButton6.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
+        jButton6.setForeground(new java.awt.Color(255, 255, 255));
         jButton6.setText("Depth Search");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setBackground(new java.awt.Color(241, 171, 59));
+        jButton7.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
+        jButton7.setForeground(new java.awt.Color(255, 255, 255));
+        jButton7.setText("Creation");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
+        jButton8.setBackground(new java.awt.Color(241, 171, 59));
+        jButton8.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
+        jButton8.setForeground(new java.awt.Color(255, 255, 255));
+        jButton8.setText("Delete");
+
+        jButton9.setBackground(new java.awt.Color(241, 171, 59));
+        jButton9.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
+        jButton9.setForeground(new java.awt.Color(255, 255, 255));
+        jButton9.setText("Traversal");
+
+        jLabel1.setFont(new java.awt.Font("Calibri Light", 0, 36)); // NOI18N
+        jLabel1.setText("EDD Learning");
+
+        jButton10.setBackground(new java.awt.Color(127, 175, 93));
+        jButton10.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
+        jButton10.setForeground(new java.awt.Color(255, 255, 255));
+        jButton10.setText("Creation");
+
+        jButton11.setBackground(new java.awt.Color(127, 175, 93));
+        jButton11.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
+        jButton11.setForeground(new java.awt.Color(255, 255, 255));
+        jButton11.setText("Delete");
+
+        jButton12.setBackground(new java.awt.Color(127, 175, 93));
+        jButton12.setFont(new java.awt.Font("Calibri Light", 1, 18)); // NOI18N
+        jButton12.setForeground(new java.awt.Color(255, 255, 255));
+        jButton12.setText("Traversal");
+
+        jLabel2.setFont(new java.awt.Font("Calibri Light", 0, 26)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(204, 0, 0));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Sorts");
+
+        jLabel3.setFont(new java.awt.Font("Calibri Light", 0, 26)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(31, 86, 141));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Graphs");
+
+        jLabel4.setFont(new java.awt.Font("Candara Light", 0, 26)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(226, 106, 0));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("AVL Trees");
+
+        jLabel5.setFont(new java.awt.Font("Calibri Light", 0, 26)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(46, 112, 26));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("B Trees");
+
+        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(102, 102, 102)));
+
+        jLabel8.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
+        jLabel8.setText("s");
+
+        jRadioButton1.setFont(new java.awt.Font("Calibri Light", 0, 16)); // NOI18N
+        jRadioButton1.setText("Automatic");
+        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton1ActionPerformed(evt);
+            }
+        });
+
+        jTextField1.setFont(new java.awt.Font("Calibri Light", 0, 15)); // NOI18N
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTextField1.setText("5");
+        jTextField1.setMargin(new java.awt.Insets(2, 8, 2, 8));
+
+        jLabel6.setFont(new java.awt.Font("Calibri Light", 1, 16)); // NOI18N
+        jLabel6.setText("Modality:");
+
+        jLabel7.setFont(new java.awt.Font("Calibri Light", 1, 16)); // NOI18N
+        jLabel7.setText("Time:");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(130, 130, 130)
+                .addComponent(jLabel6)
+                .addGap(44, 44, 44)
+                .addComponent(jRadioButton1)
+                .addGap(232, 232, 232)
+                .addComponent(jLabel7)
+                .addGap(34, 34, 34)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(131, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(13, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton1)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8))
+                .addContainerGap())
+        );
+
+        jButton13.setBackground(new java.awt.Color(255, 255, 255));
+        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/return.png"))); // NOI18N
+        jButton13.setAlignmentX(0.5F);
+        jButton13.setBorderPainted(false);
+        jButton13.setContentAreaFilled(false);
+        jButton13.setDefaultCapable(false);
+        jButton13.setFocusPainted(false);
+        jButton13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton13MouseClicked(evt);
+            }
+        });
+        jButton13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton13ActionPerformed(evt);
             }
         });
 
@@ -103,122 +285,97 @@ public class LearningMenu extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(63, 63, 63)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(174, 174, 174)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3)
-                            .addComponent(jButton2)
-                            .addComponent(jButton1)
-                            .addComponent(jButton4)
-                            .addComponent(jButton5)
-                            .addComponent(jButton6)))
+                        .addComponent(jLabel1)
+                        .addGap(632, 632, 632)
+                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(442, 442, 442)
-                        .addComponent(jRadioButton1)))
-                .addContainerGap(531, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(286, 286, 286)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
+                                        .addGap(55, 55, 55)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                                            .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addGap(56, 56, 56)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))))
+                        .addGap(74, 74, 74)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(67, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addComponent(jRadioButton1)
-                .addGap(41, 41, 41)
-                .addComponent(jButton4)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jButton6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2)
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addGap(168, 168, 168))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(67, 67, 67))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        FileNameExtensionFilter f = new FileNameExtensionFilter("JSON", "json");
         
-        fc.setFileFilter(f);
-        
-        int seleccion = fc.showOpenDialog(this);
-        
-        if(seleccion == JFileChooser.APPROVE_OPTION)
-        {
-            int[] arr = null;
-            JSONParser parser = new JSONParser();
-            try
-            {
-                
-                File fichero = fc.getSelectedFile();
-                Reader reader = new FileReader(fichero);
-                JSONObject object = (JSONObject) parser.parse(reader);
-                JSONArray jsonarr = (JSONArray) object.get("Array");
-                arr = new int[jsonarr.size()];
-                for(int i = 0; i<jsonarr.size(); i++)
-                {
-                    JSONObject obj = (JSONObject) jsonarr.get(i);
-                    
-                    arr[i] = ((Long)obj.get("num")).intValue();
-                         
-                }
-                
-                this.setVisible(false);
-                BubbleSort s = new BubbleSort(arr,false,1);
-                this.dispose();
-            }
-            catch(Exception e)
-            {
-                System.out.println("JSONArray ERROR!");
-            }
-            
-        }
         
         
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        FileNameExtensionFilter f = new FileNameExtensionFilter("JSON", "json");
         
-        fc.setFileFilter(f);
-        
-        int seleccion = fc.showOpenDialog(this);
-        
-        if(seleccion == JFileChooser.APPROVE_OPTION)
-        {
-            int[] arr = null;
-            JSONParser parser = new JSONParser();
-            try
-            {
-                
-                File fichero = fc.getSelectedFile();
-                Reader reader = new FileReader(fichero);
-                JSONObject object = (JSONObject) parser.parse(reader);
-                JSONArray jsonarr = (JSONArray) object.get("Array");
-                arr = new int[jsonarr.size()];
-                for(int i = 0; i<jsonarr.size(); i++)
-                {
-                    JSONObject obj = (JSONObject) jsonarr.get(i);
-                    
-                    arr[i] = ((Long)obj.get("num")).intValue();
-                         
-                }
-                
-                this.setVisible(false);
-                InsertionSort s = new InsertionSort(arr,true,1);
-                this.dispose();
-            }
-            catch(Exception e)
-            {
-                System.out.println("JSONArray ERROR!");
-            }
-            
-        }
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -265,7 +422,7 @@ public class LearningMenu extends javax.swing.JFrame {
                 }
                 
                 this.setVisible(false);
-                AdjacencyMatrix s = new AdjacencyMatrix(grafo.getNodes(),grafo.getMatrix(),true,2);
+                AdjacencyMatrix s = new AdjacencyMatrix(grafo.getNodes(),grafo.getMatrix(),this.jRadioButton1.isSelected(),Integer.parseInt(this.jTextField1.getText()));
                 this.dispose();
             }
             catch(Exception e)
@@ -320,7 +477,7 @@ public class LearningMenu extends javax.swing.JFrame {
                 }
                 
                 this.setVisible(false);
-                BreadthSearch bs = new BreadthSearch(grafo,true,2);
+                BreadthSearch bs = new BreadthSearch(grafo,this.jRadioButton1.isSelected(),Integer.parseInt(this.jTextField1.getText()));
                 this.dispose();
             }
             catch(Exception e)
@@ -375,7 +532,7 @@ public class LearningMenu extends javax.swing.JFrame {
                 }
                 
                 this.setVisible(false);
-                DepthSearch bs = new DepthSearch(grafo,false,2);
+                DepthSearch bs = new DepthSearch(grafo,this.jRadioButton1.isSelected(),Integer.parseInt(this.jTextField1.getText()));
                 this.dispose();
             }
             catch(Exception e)
@@ -386,6 +543,179 @@ public class LearningMenu extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        FileNameExtensionFilter f = new FileNameExtensionFilter("JSON", "json");
+        
+        fc.setFileFilter(f);
+        
+        int seleccion = fc.showOpenDialog(this);
+        
+        if(seleccion == JFileChooser.APPROVE_OPTION)
+        {
+            int[] arr = null;
+            JSONParser parser = new JSONParser();
+            try
+            {
+                
+                File fichero = fc.getSelectedFile();
+                Reader reader = new FileReader(fichero);
+                JSONObject object = (JSONObject) parser.parse(reader);
+                JSONArray jsonarr = (JSONArray) object.get("Array");
+                arr = new int[jsonarr.size()];
+                for(int i = 0; i<jsonarr.size(); i++)
+                {
+                    JSONObject obj = (JSONObject) jsonarr.get(i);
+                    
+                    arr[i] = ((Long)obj.get("num")).intValue();
+                         
+                }
+                
+                this.setVisible(false);
+                QuickSort s = new QuickSort(arr,this.jRadioButton1.isSelected(),Integer.parseInt(this.jTextField1.getText()));
+                this.dispose();
+            }
+            catch(Exception e)
+            {
+                System.out.println("JSONArray ERROR!");
+            }
+            
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        FileNameExtensionFilter f = new FileNameExtensionFilter("JSON", "json");
+        
+        fc.setFileFilter(f);
+        
+        int seleccion = fc.showOpenDialog(this);
+        
+        if(seleccion == JFileChooser.APPROVE_OPTION)
+        {
+            int[] arr = null;
+            JSONParser parser = new JSONParser();
+            try
+            {
+                
+                File fichero = fc.getSelectedFile();
+                Reader reader = new FileReader(fichero);
+                JSONObject object = (JSONObject) parser.parse(reader);
+                JSONArray jsonarr = (JSONArray) object.get("Array");
+                arr = new int[jsonarr.size()];
+                for(int i = 0; i<jsonarr.size(); i++)
+                {
+                    JSONObject obj = (JSONObject) jsonarr.get(i);
+                    
+                    arr[i] = ((Long)obj.get("num")).intValue();
+                         
+                }
+                
+                this.setVisible(false);
+                InsertionSort s = new InsertionSort(arr,this.jRadioButton1.isSelected(),Integer.parseInt(this.jTextField1.getText()));
+                this.dispose();
+            }
+            catch(Exception e)
+            {
+                System.out.println("JSONArray ERROR!");
+            }
+            
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        FileNameExtensionFilter f = new FileNameExtensionFilter("JSON", "json");
+        
+        fc.setFileFilter(f);
+        
+        int seleccion = fc.showOpenDialog(this);
+        
+        if(seleccion == JFileChooser.APPROVE_OPTION)
+        {
+            int[] arr = null;
+            JSONParser parser = new JSONParser();
+            try
+            {
+                
+                File fichero = fc.getSelectedFile();
+                Reader reader = new FileReader(fichero);
+                JSONObject object = (JSONObject) parser.parse(reader);
+                JSONArray jsonarr = (JSONArray) object.get("Array");
+                arr = new int[jsonarr.size()];
+                for(int i = 0; i<jsonarr.size(); i++)
+                {
+                    JSONObject obj = (JSONObject) jsonarr.get(i);
+                    
+                    arr[i] = ((Long)obj.get("num")).intValue();
+                         
+                }
+                
+                this.setVisible(false);
+                BubbleSort s = new BubbleSort(arr,this.jRadioButton1.isSelected(),Integer.parseInt(this.jTextField1.getText()));
+                this.dispose();
+            }
+            catch(Exception e)
+            {
+                System.out.println("JSONArray ERROR!");
+            }
+            
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        FileNameExtensionFilter f = new FileNameExtensionFilter("JSON", "json");
+        
+        fc.setFileFilter(f);
+        
+        int seleccion = fc.showOpenDialog(this);
+        
+        if(seleccion == JFileChooser.APPROVE_OPTION)
+        {
+            int[] arr = null;
+            JSONParser parser = new JSONParser();
+            try
+            {
+                
+                File fichero = fc.getSelectedFile();
+                Reader reader = new FileReader(fichero);
+                JSONObject object = (JSONObject) parser.parse(reader);
+                JSONArray jsonarr = (JSONArray) object.get("Input");
+                arr = new int[jsonarr.size()];
+                for(int i = 0; i<jsonarr.size(); i++)
+                {
+                    JSONObject obj = (JSONObject) jsonarr.get(i);
+                    
+                    arr[i] = ((Long)obj.get("num")).intValue();
+                         
+                }
+                
+                this.setVisible(false);
+                AVLTreeCreat avl = new AVLTreeCreat(arr,this.jRadioButton1.isSelected(),Integer.parseInt(this.jTextField1.getText()));
+                this.dispose();
+            }
+            catch(Exception e)
+            {
+                System.out.println("JSONArray ERROR!");
+            }
+            
+        }
+             
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void jButton13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton13MouseClicked
+        this.setVisible(false);
+        LearningMenu m = new LearningMenu();
+        this.dispose();
+    }//GEN-LAST:event_jButton13MouseClicked
+
+    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        this.setVisible(false);
+        Login l = new Login();
+        this.dispose();
+    }//GEN-LAST:event_jButton13ActionPerformed
+
     
     
     
@@ -394,11 +724,28 @@ public class LearningMenu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser fc;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton11;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
